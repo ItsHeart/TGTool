@@ -1,17 +1,17 @@
 # TGTool
 前端工具库
 
-#Done
+#Done  
 1.alert
 
 #Install
-```java  
+```html  
 <link rel="stylesheet" type="text/css" href="TGTool.css">
 <script type="text/javascript" src="TGTool.js"></script
 ```
 
 #Examples
-```java  
+```JavaScript  
 var tg = TGTool();
 tg.info("提示");
 tg.success("成功");
