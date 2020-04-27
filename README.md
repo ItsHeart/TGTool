@@ -1,6 +1,9 @@
 # TGTool
 前端工具库
 
+#Done
+1.alert
+
 #Install
 ```java  
 <link rel="stylesheet" type="text/css" href="TGTool.css">
