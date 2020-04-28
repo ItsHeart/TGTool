@@ -5,12 +5,14 @@
 1.alert
 
 #Install
+
 ```html  
 <link rel="stylesheet" type="text/css" href="TGTool.css">
-<script type="text/javascript" src="TGTool.js"></script
+<script type="text/javascript" src="TGTool.js"></script>
 ```
 
 #Examples
+1.alert
 ```JavaScript  
 var tg = TGTool();
 tg.info("提示");
