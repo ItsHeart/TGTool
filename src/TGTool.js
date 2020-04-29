@@ -1,3 +1,19 @@
+/*
+author:dxc
+Date：2020/4/27
+ */
+//颜色
+var bgBlue = "#EDF2FC";
+var darkBlue = "#5BC0DE"; 
+var darkBlue2 = "#409EFF";
+var bgGreen = "#F0F9EB";
+var darkGreen = "#5CB85C";
+var bgOrange = "#FDF6EC";
+var darkOrange = "#F0AD4E"; 
+var bgRed = "#FEF0F0";
+var darkRed = "#D9534F"; 
+var lightGrey = "#808080"
+
 //图标
 var Icon = function() {
   var path1,path2,path3;
@@ -11,7 +27,7 @@ var Icon = function() {
       
       path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
       path1.setAttribute("d","M512 524.8m-416 0a416 416 0 1 0 832 0 416 416 0 1 0-832 0Z");
-      path1.setAttribute("fill","#5BC0DE");
+      path1.setAttribute("fill",darkBlue);
       infoIcon.appendChild(path1);
       
       path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -35,7 +51,7 @@ var Icon = function() {
       
       path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
       path1.setAttribute("d","M512 512m-403.2 0a403.2 403.2 0 1 0 806.4 0 403.2 403.2 0 1 0-806.4 0Z");
-      path1.setAttribute("fill","#F0AD4E");
+      path1.setAttribute("fill",darkOrange);
       warningIcon.appendChild(path1);
       
       path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -59,7 +75,7 @@ var Icon = function() {
       
       path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
       path1.setAttribute("d","M512 76.8c-236.8 0-435.2 192-435.2 435.2s192 435.2 435.2 435.2 435.2-192 435.2-435.2S748.8 76.8 512 76.8z m249.6 320L480 704c-12.8 12.8-38.4 12.8-51.2 0L288 556.8c-12.8-12.8-12.8-38.4 0-51.2 12.8-12.8 38.4-12.8 51.2 0l115.2 115.2L704 339.2c12.8-12.8 38.4-12.8 51.2 0 25.6 12.8 25.6 38.4 6.4 57.6z");
-      path1.setAttribute("fill","#5CB85C");
+      path1.setAttribute("fill",darkGreen);
       successIcon.appendChild(path1);
       
       path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -78,7 +94,7 @@ var Icon = function() {
       
       path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
       path1.setAttribute("d","M512 512m-435.2 0a435.2 435.2 0 1 0 870.4 0 435.2 435.2 0 1 0-870.4 0Z");
-      path1.setAttribute("fill","#D9534F");
+      path1.setAttribute("fill",darkRed);
       errorIcon.appendChild(path1);
       
       path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -91,21 +107,64 @@ var Icon = function() {
     },
   }
 }
-//info图标
 
+var Button = function(){
+  return {
+    default: function(Text) {
+      var text = Text;
+      var clickStatus = 0;
+      var button = document.createElement("div");
+      button.style.backgroundColor = darkBlue ;
+      button.style.color = "#fff" ;
+      button.style.width = 16 + getByteLength(text) * 7 +"px";
+      button.style.height = "12px";
+      button.style.border = "1px solid #dcdfe6";
+      button.style.padding =  "12px 20px";
+      button.style.fontSize =  "14px";
+      button.style.borderRadius = "4px";
+      button.style.textAlign = 'center';
+      button.style.lineHeight = '12px';
+      button.className = "tgtool";
+      button.onmousemove = function(){
+        button.style.backgroundColor = darkBlue2 ;
+      };
+      button.onmouseout = function(){
+        if(clickStatus == 0)
+          button.style.backgroundColor = darkBlue;
+      };
+      document.onclick = function(e){
+        var pop = button;
+        if (e.target!= pop && !pop.contains(e.target)){
+          clickStatus = 0;
+          button.style.backgroundColor = darkBlue;
+        }else{
+          clickStatus = 1;
+          button.style.backgroundColor = darkBlue2;
+        }
+      };
+      //字
+      var textNode = document.createElement("label");
+      textNode.innerText = text;
+      textNode.style.verticalAlign = "middle";
+      button.appendChild(textNode);
+      return button;
+    }
+  }
+}
 
 var TGTool = function() {
   var body = document.getElementsByTagName("body")[0];
   var alertCount = 0;
   var icon = Icon();
+  var button = Button();
   return {
     info: function(text) {
       alertCount ++;
       //外框
       var alertDiv = document.createElement("div");
       //颜色
-      alertDiv.style.backgroundColor = "#EDF2FC";
-      alertDiv.style.color = "#303133";
+      alertDiv.style.backgroundColor = bgBlue;
+      alertDiv.style.color = darkBlue;
       //位置
       alertDiv.style.position = " fixed";
       alertDiv.style.zIndex = 9999999;
@@ -118,7 +177,7 @@ var TGTool = function() {
       alertDiv.style.textAlign = "center";
       alertDiv.style.padding = "12px 20px";
       //动画
-      alertDiv.className = "animated  bounceInDown alertDiv";
+      alertDiv.className = "animated  bounceInDown tgtool";
       //标签
       alertDiv.appendChild(icon.info(20,20));
       //提示字
@@ -144,8 +203,8 @@ var TGTool = function() {
       //外框
       var alertDiv = document.createElement("div");
       //颜色
-      alertDiv.style.backgroundColor = "#FDF6EC";
-      alertDiv.style.color = "#F0AD4E";
+      alertDiv.style.backgroundColor = bgOrange;
+      alertDiv.style.color = darkOrange;
       //位置
       alertDiv.style.position = " fixed";
       alertDiv.style.zIndex = 9999999;
@@ -154,11 +213,11 @@ var TGTool = function() {
       //调整左右位置
       alertDiv.style.marginLeft = "-" + ( getByteLength(text) * 7 + 70 ) / 2 + "px";
       alertDiv.style.borderRadius = "8px";
-      alertDiv.style.fontSize = " 14px";
+      alertDiv.style.fontSize = "14px";
       alertDiv.style.textAlign = "center";
       alertDiv.style.padding = "12px 20px";
       //动画
-      alertDiv.className = "animated  bounceInDown alertDiv";
+      alertDiv.className = "animated  bounceInDown tgtool";
       //标签
       alertDiv.appendChild(icon.warning(20,20));
       //提示字
@@ -184,8 +243,8 @@ var TGTool = function() {
       //外框
       var alertDiv = document.createElement("div");
       //颜色
-      alertDiv.style.backgroundColor = "#F0F9EB";
-      alertDiv.style.color = "#5CB85C";
+      alertDiv.style.backgroundColor = bgGreen;
+      alertDiv.style.color =  darkGreen;
       //位置
       alertDiv.style.position = " fixed";
       alertDiv.style.zIndex = 9999999;
@@ -194,11 +253,11 @@ var TGTool = function() {
       //调整左右位置
       alertDiv.style.marginLeft = "-" + ( getByteLength(text) * 7 + 70 ) / 2 + "px";
       alertDiv.style.borderRadius = "8px";
-      alertDiv.style.fontSize = " 14px";
+      alertDiv.style.fontSize = "14px";
       alertDiv.style.textAlign = "center";
       alertDiv.style.padding = "12px 20px";
       //动画
-      alertDiv.className = "animated  bounceInDown alertDiv";
+      alertDiv.className = "animated  bounceInDown tgtool";
       //标签
       alertDiv.appendChild(icon.success(20,20));
       //提示字
@@ -224,8 +283,8 @@ var TGTool = function() {
       //外框
       var alertDiv = document.createElement("div");
       //颜色
-      alertDiv.style.backgroundColor = "#FEF0F0";
-      alertDiv.style.color = "#D9534F";
+      alertDiv.style.backgroundColor = bgRed;
+      alertDiv.style.color = darkRed;
       //位置
       alertDiv.style.position = " fixed";
       alertDiv.style.zIndex = 9999999;
@@ -234,11 +293,11 @@ var TGTool = function() {
       //调整左右位置
       alertDiv.style.marginLeft = "-" + ( getByteLength(text) * 7 + 70 ) / 2 + "px";
       alertDiv.style.borderRadius = "8px";
-      alertDiv.style.fontSize = " 14px";
+      alertDiv.style.fontSize = "14px";
       alertDiv.style.textAlign = "center";
       alertDiv.style.padding = "12px 20px";
       //动画
-      alertDiv.className = "animated  bounceInDown alertDiv";
+      alertDiv.className = "animated  bounceInDown tgtool";
       //标签
       alertDiv.appendChild(icon.error(20,20));
       //提示字
@@ -258,11 +317,96 @@ var TGTool = function() {
         }, 4000);
       }, 4000);
       return true;
+    },
+    confirm:function(title,text){
+      //透明遮罩层
+      var mask = document.createElement("div");
+      mask.style.position = "fixed";
+      mask.style.zIndex = 1000000;
+      mask.style.top = 0;
+      mask.style.bottom = 0;
+      mask.style.left = 0;
+      mask.style.right = 0;
+      mask.style.backgroundColor = lightGrey;
+      mask.style.opacity = "0.5";
+      body.appendChild(mask);
+      var confirmDiv = document.createElement("div");
+      //颜色
+      confirmDiv.style.backgroundColor = "#fff";
+      confirmDiv.style.color = "#000";
+      //位置
+      confirmDiv.style.width = "400px";
+      confirmDiv.style.height = "140px";
+      confirmDiv.style.position = " fixed";
+      confirmDiv.style.zIndex = 9999999;
+      confirmDiv.style.top = "200px";
+      confirmDiv.style.left = "50%";
+      confirmDiv.style.marginLeft = "-200px";
+      confirmDiv.style.padding = "0 10px";
+      //内容
+      confirmDiv.style.borderRadius = "8px";
+      confirmDiv.style.fontSize = "14px";
+      confirmDiv.style.textAlign = "left";
+
+      //上半部分
+      var topDiv = document.createElement("div");
+      topDiv.style.backgroundColor = bgBlue;
+      topDiv.style.borderRadius = "8px 8px 0 0";
+      topDiv.style.width = confirmDiv.width;
+      topDiv.style.height = "40px";
+      topDiv.style.textAlign = "center";
+      topDiv.style.margin = "0 -10px";
+      topDiv.style.top = "0";
+
+      //提示字
+      var titleNode = document.createElement("label");
+      titleNode.innerText = title;
+      titleNode.style.verticalAlign = "middle";
+      titleNode.style.fontSize = "18px";
+      titleNode.style.lineHeight = "40px";
+      topDiv.appendChild(titleNode);
+
+      //内容
+      var textNode = document.createElement("label");
+      textNode.innerText = text;
+      textNode.style.fontSize = "14px";
+      textNode.style.lineHeight = "24px";
+      textNode.style.position = "absolute";
+      textNode.style.width = "90%";
+      textNode.style.top = "60px";
+      textNode.style.left = "5%"
+
+      //调整高度
+      var lineNum = getByteLength(text) / 54;
+      var heightNum = confirmDiv.style.height.replace("px","");
+      if(heightNum < lineNum *  24 + 116 ){
+        confirmDiv.style.height = lineNum *  24 + 116 + "px";
+      }
+
+      //确定按钮
+      var btn = button.default("确定");
+      btn.style.position = "absolute";
+      btn.style.bottom = "10px";
+      btn.style.right = "20px";
+      
+      btn.onclick = function(){
+        body.removeChild(confirmDiv);
+        body.removeChild(mask);
+      };
+
+      confirmDiv.appendChild(topDiv);
+      confirmDiv.appendChild(textNode);
+      confirmDiv.appendChild(btn);
+      body.appendChild(confirmDiv);
+
     }
   }  
 };
 
+
 //函数
+
+
 //计算字节长度
 function getByteLength( str ){
   return str.replace(/[\u0391-\uFFE5]/g,"aa").length;
