@@ -12,7 +12,7 @@ var bgOrange = "#FDF6EC";
 var darkOrange = "#F0AD4E"; 
 var bgRed = "#FEF0F0";
 var darkRed = "#D9534F"; 
-var lightGrey = "#808080"
+var lightGrey = "#E2E2E2"
 
 //图标
 var Icon = function() {
@@ -108,55 +108,49 @@ var Icon = function() {
   }
 }
 
-var Button = function(){
-  return {
-    default: function(Text) {
-      var text = Text;
-      var clickStatus = 0;
-      var button = document.createElement("div");
-      button.style.backgroundColor = darkBlue ;
-      button.style.color = "#fff" ;
-      button.style.width = 16 + getByteLength(text) * 7 +"px";
-      button.style.height = "12px";
-      button.style.border = "1px solid #dcdfe6";
-      button.style.padding =  "12px 20px";
-      button.style.fontSize =  "14px";
-      button.style.borderRadius = "4px";
-      button.style.textAlign = 'center';
-      button.style.lineHeight = '12px';
-      button.className = "tgtool";
-      button.onmousemove = function(){
-        button.style.backgroundColor = darkBlue2 ;
-      };
-      button.onmouseout = function(){
-        if(clickStatus == 0)
-          button.style.backgroundColor = darkBlue;
-      };
-      document.onclick = function(e){
-        var pop = button;
-        if (e.target!= pop && !pop.contains(e.target)){
-          clickStatus = 0;
-          button.style.backgroundColor = darkBlue;
-        }else{
-          clickStatus = 1;
-          button.style.backgroundColor = darkBlue2;
-        }
-      };
-      //字
-      var textNode = document.createElement("label");
-      textNode.innerText = text;
-      textNode.style.verticalAlign = "middle";
-      button.appendChild(textNode);
-      return button;
-    }
+var Button = function(color1,color2,text,type){
+  var clickStatus = 0;
+  var button = document.createElement("div");
+  button.style.backgroundColor = color1 ;
+  if(type == "default"){
+    button.style.color = "#000" ;
+  }else{
+    button.style.color = "#fff" ;
   }
+  //调整宽度
+  button.style.width = 16 + getByteLength(text) * 7 +"px";
+  button.className = "tgtool tgBtn";
+  //hover
+  button.onmousemove = function(){
+    button.style.backgroundColor = color2 ;
+  };
+  button.onmouseout = function(){
+    if(clickStatus == 0)
+      button.style.backgroundColor = color1;
+  };
+  //点击
+  document.onclick = function(e){
+    var pop = button;
+    if (e.target!= pop && !pop.contains(e.target)){
+      clickStatus = 0;
+      button.style.backgroundColor = color1;
+    }else{
+      clickStatus = 1;
+      button.style.backgroundColor = color2;
+    }
+  };
+  //字
+  var textNode = document.createElement("label");
+  textNode.innerText = text;
+  textNode.style.verticalAlign = "middle";
+  button.appendChild(textNode);
+  return button;
 }
 
 var TGTool = function() {
   var body = document.getElementsByTagName("body")[0];
   var alertCount = 0;
   var icon = Icon();
-  var button = Button();
   return {
     info: function(text) {
       alertCount ++;
@@ -167,17 +161,11 @@ var TGTool = function() {
       alertDiv.style.color = darkBlue;
       //位置
       alertDiv.style.position = " fixed";
-      alertDiv.style.zIndex = 9999999;
       alertDiv.style.top = (alertCount * 50 - 30) + "px";
-      alertDiv.style.left = "50%";
       //调整左右位置
       alertDiv.style.marginLeft = "-" + ( getByteLength(text) * 7 + 70 ) / 2 + "px";
-      alertDiv.style.borderRadius = "8px";
-      alertDiv.style.fontSize = " 14px";
-      alertDiv.style.textAlign = "center";
-      alertDiv.style.padding = "12px 20px";
       //动画
-      alertDiv.className = "animated  bounceInDown tgtool";
+      alertDiv.className = "tgAlertDiv animated  bounceInDown tgtool";
       //标签
       alertDiv.appendChild(icon.info(20,20));
       //提示字
@@ -207,17 +195,11 @@ var TGTool = function() {
       alertDiv.style.color = darkOrange;
       //位置
       alertDiv.style.position = " fixed";
-      alertDiv.style.zIndex = 9999999;
       alertDiv.style.top = (alertCount * 50 - 30) + "px";
-      alertDiv.style.left = "50%";
       //调整左右位置
       alertDiv.style.marginLeft = "-" + ( getByteLength(text) * 7 + 70 ) / 2 + "px";
-      alertDiv.style.borderRadius = "8px";
-      alertDiv.style.fontSize = "14px";
-      alertDiv.style.textAlign = "center";
-      alertDiv.style.padding = "12px 20px";
       //动画
-      alertDiv.className = "animated  bounceInDown tgtool";
+      alertDiv.className = "tgAlertDiv animated  bounceInDown tgtool";
       //标签
       alertDiv.appendChild(icon.warning(20,20));
       //提示字
@@ -247,17 +229,11 @@ var TGTool = function() {
       alertDiv.style.color =  darkGreen;
       //位置
       alertDiv.style.position = " fixed";
-      alertDiv.style.zIndex = 9999999;
       alertDiv.style.top = (alertCount * 50 - 30) + "px";
-      alertDiv.style.left = "50%";
       //调整左右位置
       alertDiv.style.marginLeft = "-" + ( getByteLength(text) * 7 + 70 ) / 2 + "px";
-      alertDiv.style.borderRadius = "8px";
-      alertDiv.style.fontSize = "14px";
-      alertDiv.style.textAlign = "center";
-      alertDiv.style.padding = "12px 20px";
       //动画
-      alertDiv.className = "animated  bounceInDown tgtool";
+      alertDiv.className = "tgAlertDiv animated  bounceInDown tgtool";
       //标签
       alertDiv.appendChild(icon.success(20,20));
       //提示字
@@ -287,7 +263,6 @@ var TGTool = function() {
       alertDiv.style.color = darkRed;
       //位置
       alertDiv.style.position = " fixed";
-      alertDiv.style.zIndex = 9999999;
       alertDiv.style.top = (alertCount * 50 - 30) + "px";
       alertDiv.style.left = "50%";
       //调整左右位置
@@ -297,7 +272,7 @@ var TGTool = function() {
       alertDiv.style.textAlign = "center";
       alertDiv.style.padding = "12px 20px";
       //动画
-      alertDiv.className = "animated  bounceInDown tgtool";
+      alertDiv.className = "tgAlertDiv animated  bounceInDown tgtool";
       //标签
       alertDiv.appendChild(icon.error(20,20));
       //提示字
@@ -318,7 +293,7 @@ var TGTool = function() {
       }, 4000);
       return true;
     },
-    confirm:function(title,text){
+    confirm:function(title,text,callback1,callback2){
       //透明遮罩层
       var mask = document.createElement("div");
       mask.style.position = "fixed";
@@ -334,6 +309,7 @@ var TGTool = function() {
       //颜色
       confirmDiv.style.backgroundColor = "#fff";
       confirmDiv.style.color = "#000";
+      confirmDiv.style.boxShadow = "0 2px 12px 0 rgba(0,0,0,.1)";
       //位置
       confirmDiv.style.width = "400px";
       confirmDiv.style.height = "140px";
@@ -380,23 +356,38 @@ var TGTool = function() {
       var lineNum = getByteLength(text) / 54;
       var heightNum = confirmDiv.style.height.replace("px","");
       if(heightNum < lineNum *  24 + 116 ){
-        confirmDiv.style.height = lineNum *  24 + 116 + "px";
+        confirmDiv.style.height = lineNum *  24 + 126 + "px";
       }
 
       //确定按钮
-      var btn = button.default("确定");
-      btn.style.position = "absolute";
-      btn.style.bottom = "10px";
-      btn.style.right = "20px";
+      var btn1 = Button(darkBlue,darkBlue2,"确定","");
+      btn1.style.position = "absolute";
+      btn1.style.bottom = "10px";
+      btn1.style.right = "20px";
       
-      btn.onclick = function(){
+      btn1.onclick = function(){
         body.removeChild(confirmDiv);
         body.removeChild(mask);
+        callback1();
+      };
+
+      //取消按钮
+      var btn2 = Button("#fff",bgBlue,"取消","default");
+      btn2.style.position = "absolute";
+      btn2.style.bottom = "10px";
+      btn2.style.right = "116px";
+
+      btn2.onclick = function(){
+        body.removeChild(confirmDiv);
+        body.removeChild(mask);
+        if(callback2)
+          callback2();
       };
 
       confirmDiv.appendChild(topDiv);
       confirmDiv.appendChild(textNode);
-      confirmDiv.appendChild(btn);
+      confirmDiv.appendChild(btn1);
+      confirmDiv.appendChild(btn2);
       body.appendChild(confirmDiv);
 
     }

@@ -1,3 +1,20 @@
+.tgBtn{
+    height：12px;
+    border: 1px solid #dcdfe6;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 12px;
+}
+.tgAlertDiv{
+    z-index : 9999999;
+    left: 50%;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+    padding: 12px 20px;
+}
 .tgtool{
     -webkit-touch-callout: none; /* iOS Safari 
     -webkit-user-select: none; /* Chrome/Safari/Opera */
